@@ -57,6 +57,9 @@ def check_no_permutation(s1, s2):
     return count <= 1
 
 class Test(unittest.TestCase):
+    """test cases from 
+    https://github.com/careercup/CtCI-6th-Edition-Python
+    """
     data = [
         ('pale', 'ple', True),
         ('pales', 'pale', True),
