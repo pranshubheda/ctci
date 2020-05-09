@@ -1,4 +1,6 @@
 def rotate(data):
+    """O(N^2) worst case.
+    """
     n =len(data)
 
     for i in range(n//2):
