@@ -1,3 +1,4 @@
+import java.util.HashSet;
 
 /**
  * 
@@ -8,4 +9,7 @@
 public interface LinkedList<E> {
 	boolean add(E data);
 	boolean remove(E data);
+	void removeDuplicates();
+	void removeDuplicateFromSortedsRecursive();
+	void removeDuplicatesFromSortedList();
 }

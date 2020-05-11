@@ -1,3 +1,4 @@
+import java.util.HashSet;
 
 /**
  * 
@@ -65,6 +66,54 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 			//some error occured while removing from linkedlist
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	@Override
+	public void removeDuplicates() {
+		HashSet<E> visited = new HashSet<E>();
+		visited.add((E) head.getData());
+		Node temp = head;
+		while(temp.getNext() != null) {
+			E data = (E)temp.getNext().getData();
+			if(visited.contains(data)) {
+				temp.setNext(temp.getNext().getNext());
+				size--;
+			}
+			else {
+				visited.add(data);
+				temp = temp.getNext();
+			}
+		}
+	}
+	
+	private Node removeDuplicateFromSortedsRecursive(Node node) {
+		if(node.getNext() == null) {
+			return node;
+		}
+		
+		Node returned = removeDuplicateFromSortedsRecursive(node.getNext());
+		if(returned.getData() == node.getData()) {
+			node.setNext(returned.getNext());
+			size--;
+		}
+		
+		return node;
+	}
+	
+	@Override
+	public void removeDuplicateFromSortedsRecursive() {
+		removeDuplicateFromSortedsRecursive(head);
+	}
+	
+	@Override
+	public void removeDuplicatesFromSortedList() {
+		Node temp = head;
+		while(temp.getNext() != null) {
+			if(temp.getNext().getData() == temp.getData()) {
+				temp.setNext(temp.getNext().getNext());
+			}
+			temp = temp.getNext();
 		}
 	}
 	
