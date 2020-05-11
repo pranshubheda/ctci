@@ -17,11 +17,14 @@ public class RemoveDuplicates {
 //		test.removeDuplicatesFromSortedList();
 //		test.removeDuplicateFromSortedsRecursive();
 		System.out.println(test);
-
-		Node n1 = test.findNodeAtOffsetFromEnd(3);
-		System.out.println(n1);
-		Node n2 = test.findNodeAtOffsetFromEndDoublePointer(3);
-		System.out.println(n2);
+//
+//		Node n1 = test.findNodeAtOffsetFromEnd(3);
+//		System.out.println(n1);
+//		Node n2 = test.findNodeAtOffsetFromEndDoublePointer(3);
+//		System.out.println(n2);
+		
+		test.deleteMiddleNode();
+		System.out.println(test);
 	}
 
 }

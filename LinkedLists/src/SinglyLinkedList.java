@@ -153,6 +153,35 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 	}
 	
 	@Override
+	public void deleteMiddleNode() {
+		//middle = floor(size / 2)
+		Node slow = head;
+		Node fast = head;
+		
+		//lenth == 1 delete head
+		if(fast.getNext()==null) {
+			head = null;
+			return;
+		}
+		
+		//length == 2 delete head and place second element at head
+		if(fast.getNext().getNext()==null) {
+			head = fast.getNext();
+			return;
+		}
+		
+		//comment this  to delete ceiling of size/2 in case of even length
+		fast = fast.getNext().getNext();
+		
+		while(fast.getNext()!=null && fast.getNext().getNext()!=null) {
+			fast = fast.getNext().getNext();
+			slow = slow.getNext();
+		}
+		slow.setNext(slow.getNext().getNext());
+		size--;
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Node temp = head;
