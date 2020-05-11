@@ -116,6 +116,41 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 			temp = temp.getNext();
 		}
 	}
+
+	@Override
+	public Node findNodeAtOffsetFromEndDoublePointer(int offset) {
+		try {
+			Node slow=head;
+			Node fast=head;
+			int counter = 1;
+			while(counter<offset) {
+				fast = fast.getNext();
+				counter++;
+			}
+			
+			if(fast == null) {
+				throw new Exception("Invalid offset .... greater than linked list size");
+			}
+			
+			while(fast.getNext() != null) {
+				fast = fast.getNext();
+				slow = slow.getNext();
+			}
+			
+			return slow;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public Node findNodeAtOffsetFromEnd(int offset) {
+		Node temp = head;
+		for(int i=0; i<size-offset; i++)
+			temp = temp.getNext();
+		return temp;
+	}
 	
 	@Override
 	public String toString() {

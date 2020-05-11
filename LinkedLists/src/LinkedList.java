@@ -12,4 +12,6 @@ public interface LinkedList<E> {
 	void removeDuplicates();
 	void removeDuplicateFromSortedsRecursive();
 	void removeDuplicatesFromSortedList();
+	Node findNodeAtOffsetFromEnd(int offset);
+	Node findNodeAtOffsetFromEndDoublePointer(int offset);
 }
