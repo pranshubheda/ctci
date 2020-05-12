@@ -23,8 +23,24 @@ public class RemoveDuplicates {
 //		Node n2 = test.findNodeAtOffsetFromEndDoublePointer(3);
 //		System.out.println(n2);
 		
-		test.deleteMiddleNode();
+//		test.deleteMiddleNode();
+//		System.out.println(test);
+		
+		test = new SinglyLinkedList();
+		test.add(12);
+		test.add(7);
+		test.add(6);
+		test.add(1);
+		test.add(2);
+		test.add(12);
+		test.add(12);
+		test.add(12);
+		test.add(6);
+		test.add(5);
 		System.out.println(test);
-	}
+		
+		test.partition(6);
+		System.out.println(test);
+	}	
 
 }

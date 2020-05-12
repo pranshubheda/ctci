@@ -15,4 +15,6 @@ public interface LinkedList<E> {
 	Node findNodeAtOffsetFromEnd(int offset);
 	Node findNodeAtOffsetFromEndDoublePointer(int offset);
 	void deleteMiddleNode();
+	void partition(int k);
+	String toString(Node node);
 }

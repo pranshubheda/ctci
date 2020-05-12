@@ -1,5 +1,6 @@
 import java.util.HashSet;
 
+
 /**
  * 
  * @author Pranshu Nitin Bheda
@@ -182,6 +183,25 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 	}
 	
 	@Override
+	public void partition(int k) {
+		Node front = head;
+		Node rear = head;
+		while(front!=null) {
+			Node next = front.getNext();
+			if ((Integer)front.getData() < k) {
+				front.setNext(head);
+				head = front;
+			}
+			else {
+				rear.setNext(front);
+				rear = front;
+			}
+			front = next;
+		}
+		rear.setNext(null);
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Node temp = head;
@@ -190,6 +210,20 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 			sb.append(temp.getData());
 			if(counter < size-1)
 				sb.append("->");
+			temp = temp.getNext();
+			counter++;
+		}
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString(Node node) {
+		StringBuilder sb = new StringBuilder();
+		Node temp = node;
+		int counter = 0;
+		while(temp!=null) {
+			sb.append(temp.getData());
+			sb.append("->");
 			temp = temp.getNext();
 			counter++;
 		}
