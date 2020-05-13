@@ -11,11 +11,41 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 
 	private Node head;
 	private int size;
+
+	public SinglyLinkedList() {
+		super();
+	}
 	
+	public SinglyLinkedList(Node head) {
+		super();
+		this.head = head;
+		this.size = 0;
+		Node temp = head;
+		while(temp!=null) {
+			this.size++;
+			temp = temp.getNext();
+		}
+	}
+
+	@Override
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+	
+	@Override
 	public int getSize() {
 		return size;
 	}
 
+	@Override
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
 	@Override
 	public boolean add(E data) {
 		try {
@@ -202,6 +232,202 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 	}
 
 	@Override
+	public LinkedList<Integer> sumOnesPlaceAtHead(LinkedList<Integer> list) {
+		Node i = this.head;
+		Node j = list.getHead();
+		int m= this.getSize(), n = list.getSize();
+		Node result = null;
+		Node resultFront = null;
+		int carry = 0;
+		while(i!=null && j!=null) {
+			int sum = (Integer)i.getData() +(Integer)j.getData() + carry;
+			int val = sum %10;
+			carry = sum/10;
+			Node newNode = new Node(val);
+			if(resultFront==null) {
+				resultFront = newNode;
+				result = newNode;
+			}else {
+				result.setNext(newNode);
+				result = newNode;
+			}
+			i = i.getNext();
+			j = j.getNext();
+		}
+		Node padd = i!=null ? i : j;
+		while(padd!=null) {
+			int sum = (int) padd.getData() + carry;
+			int val = sum %10;
+			carry = sum/10;
+			Node newNode = new Node(val);
+			result.setNext(newNode);
+			result = newNode;
+			padd = padd.getNext();
+		}
+		
+		if(carry > 0) {
+			Node newNode = new Node(carry);
+			result.setNext(newNode);
+			result = newNode;
+		}
+		return new SinglyLinkedList<Integer>(resultFront);
+	}
+	
+	private void paddingHelper(int pad, SinglyLinkedList l) {
+		while(pad > 0) {
+			Node temp = new Node(0);
+			temp.setNext(l.getHead());
+			l.setHead(temp);
+			pad--;
+			l.size++;
+		}
+	}
+	
+	private void paddWithZeros(SinglyLinkedList l1, SinglyLinkedList l2) {
+		int pad = l1.getSize() -l2.getSize();
+		if(pad == 0) {
+			return;
+		}
+		else if (pad > 0) {
+			//l2 is shorter
+			pad = Math.abs(pad);
+			paddingHelper(pad, l2);
+		}
+		else {
+			//l1 is shorter
+			pad = Math.abs(pad);
+			paddingHelper(pad, l1);
+		}
+	}
+	
+	private class PartialSum {
+		Node val;
+		int carry;
+		public PartialSum(Node val, int carry) {
+			super();
+			this.val = val;
+			this.carry = carry;
+		}
+	}
+	
+	private PartialSum sumRecursive(Node i, Node j) {
+		if(i.getNext() == null && j.getNext()==null) {
+			int sum = (int) i.getData()+ (int) j.getData();
+			int carry = sum/10;
+			int val = sum%10;
+			return new PartialSum(new Node(val), carry);
+		}
+		else {
+			PartialSum partialSum = sumRecursive(i.getNext(), j.getNext());
+			int sum = (int) i.getData()+ (int) j.getData() + partialSum.carry;
+			int carry = sum/10;
+			int val = sum%10;
+			Node newNode = new Node(val);
+			newNode.setNext(partialSum.val);
+			partialSum.val = newNode;
+			partialSum.carry = carry;
+			return partialSum;
+		}
+	}
+	
+	@Override
+	public LinkedList<Integer> sumOnesPlaceAtTail(SinglyLinkedList<Integer> list) {
+		//padd
+		SinglyLinkedList l1 = this;
+		SinglyLinkedList l2 = list;
+		paddWithZeros(l1, l2);
+		//sum
+		PartialSum partialSum = sumRecursive(l1.getHead(), l2.getHead());
+		if(partialSum.carry > 0) {
+			Node newNode = new Node(partialSum.carry);
+			newNode.setNext(partialSum.val);
+			partialSum.val = newNode;
+			partialSum.carry = 0;
+		}
+		return new SinglyLinkedList<Integer>(partialSum.val);
+	}
+	
+	@Override
+	public boolean palindrome() {
+		Node slow = this.head;
+		Node fast = this.head;
+		Node reverse = null;
+		
+		while(fast!=null && fast.getNext() != null) {
+			Node next = slow.getNext();
+			fast = fast.getNext().getNext();
+			if(reverse == null) {
+				slow.setNext(null);
+				reverse = slow;
+			}
+			else {
+				slow.setNext(reverse);
+				reverse = slow;
+			}
+			slow = next;
+		}
+		
+		if(fast!=null) {
+			//odd length strings
+			slow = slow.getNext();
+		}
+		
+		System.out.println(new SinglyLinkedList<E>(reverse));
+		while(slow.getNext()!=null) {
+			if(reverse.getData().hashCode() != slow.getData().hashCode())
+				return false;
+			slow = slow.getNext();
+			reverse = reverse.getNext();
+		}
+		return true;
+	}
+	
+	@Override
+	public void reverse() {
+		Node curr = head;
+
+		while(curr.getNext()!=null) {
+			Node nextOfNext = curr.getNext().getNext();
+			curr.getNext().setNext(curr);
+			if(curr == head) {
+				head = curr.getNext();
+				curr.setNext(null);
+			}
+			else {
+				Node temp = curr.getNext();
+				curr.setNext(head);
+				head = temp;
+			}
+			curr = nextOfNext;
+		}
+		if(curr != null) {
+			curr.setNext(head);
+			head = curr;
+		}
+	}
+	
+	@Override
+	public Node findIntersection(LinkedList<E> list) {
+		paddWithZeros(this, (SinglyLinkedList)list);
+		Node i = this.head;
+		Node j = list.getHead();
+		
+		Node tail1 = this.findNodeAtOffsetFromEnd(0);
+		Node tail2 = list.findNodeAtOffsetFromEnd(0);
+		
+		if(tail1!=tail2) {
+			return null;
+		}
+		
+		while(i!=j) {
+			i = i.getNext();
+			j = j.getNext();
+		}
+
+		return i;
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Node temp = head;
@@ -215,18 +441,11 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 		}
 		return sb.toString();
 	}
-	
+
 	@Override
 	public String toString(Node node) {
-		StringBuilder sb = new StringBuilder();
-		Node temp = node;
-		int counter = 0;
-		while(temp!=null) {
-			sb.append(temp.getData());
-			sb.append("->");
-			temp = temp.getNext();
-			counter++;
-		}
-		return sb.toString();
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
 }

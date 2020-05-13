@@ -13,5 +13,7 @@ public class Test {
 			}
 		}
 		System.out.println(test);
+		test.reverse();
+		System.out.println(test);
 	}
 }

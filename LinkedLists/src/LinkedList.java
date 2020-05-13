@@ -17,4 +17,12 @@ public interface LinkedList<E> {
 	void deleteMiddleNode();
 	void partition(int k);
 	String toString(Node node);
+	LinkedList<Integer> sumOnesPlaceAtHead(LinkedList<Integer> list);
+	LinkedList<Integer> sumOnesPlaceAtTail(SinglyLinkedList<Integer> list);
+	int getSize();
+	Node getHead();
+	boolean palindrome();
+	void reverse();
+	void setSize(int size);
+	Node findIntersection(LinkedList<E> list);
 }

@@ -1,46 +1,42 @@
 import java.util.HashSet;
 
+
 public class RemoveDuplicates {
 
 	public static void main(String[] args) {
-		SinglyLinkedList<Integer> test = new SinglyLinkedList();
-		for (int i = 0; i < 10; i++) {
-			test.add(i);
-			if(i%2==0) {
-				test.add(i);
-			}
-			
+		SinglyLinkedList<Integer> list1 = new SinglyLinkedList();
+		Node[] nodes1 = new Node[7];
+		for(int i=0; i<nodes1.length; i++) {
+			nodes1[i] = new Node(i);
 		}
-		System.out.println(test);
-		
-		test.removeDuplicates();
-//		test.removeDuplicatesFromSortedList();
-//		test.removeDuplicateFromSortedsRecursive();
-		System.out.println(test);
-//
-//		Node n1 = test.findNodeAtOffsetFromEnd(3);
-//		System.out.println(n1);
-//		Node n2 = test.findNodeAtOffsetFromEndDoublePointer(3);
-//		System.out.println(n2);
-		
-//		test.deleteMiddleNode();
-//		System.out.println(test);
-		
-		test = new SinglyLinkedList();
-		test.add(12);
-		test.add(7);
-		test.add(6);
-		test.add(1);
-		test.add(2);
-		test.add(12);
-		test.add(12);
-		test.add(12);
-		test.add(6);
-		test.add(5);
-		System.out.println(test);
-		
-		test.partition(6);
-		System.out.println(test);
-	}	
 
+		for(int i=nodes1.length-1; i>0; i--) {
+			nodes1[i-1].setNext(nodes1[i]);
+		}
+		list1.setHead(nodes1[0]);
+		list1.setSize(7);
+		System.out.println(list1);
+		
+		SinglyLinkedList<Integer> list2 = new SinglyLinkedList();
+		Node[] nodes2 = new Node[2];
+		
+		for(int i=0; i<nodes2.length; i++) {
+			nodes2[i] = new Node(i+1*20);
+		}
+		
+		for(int i=nodes2.length-1; i>0; i--) {
+			nodes2[i-1].setNext(nodes2[i]);
+		}
+		list2.setHead(nodes2[0]);
+		list2.setSize(2);
+		System.out.println(list2);
+		
+		nodes2[1].setNext(nodes1[4]);
+		list2.setSize(5);
+		System.out.println(list1);
+		System.out.println(list2);
+		
+		Node intersection = list1.findIntersection(list2);
+		System.out.println(intersection);
+	}	
 }
