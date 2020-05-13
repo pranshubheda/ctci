@@ -428,6 +428,33 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 	}
 	
 	@Override
+	public Node findLoop() {
+		Node slow = head;
+		Node fast = head;
+	
+		while(fast!=null && fast.getNext()!=null) {
+			slow = slow.getNext();
+			fast = fast.getNext().getNext();
+			if(slow == fast) {
+				break;
+			}
+		}
+		
+		if(fast == null || fast.getNext()==null) {
+			//no intersection found
+			return null;
+		}
+		
+		slow = head;
+		while(slow!=fast) {
+			slow = slow.getNext();
+			fast = fast.getNext();
+		}
+		
+		return fast;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Node temp = head;
@@ -447,5 +474,5 @@ public class SinglyLinkedList<E> implements LinkedList<E>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

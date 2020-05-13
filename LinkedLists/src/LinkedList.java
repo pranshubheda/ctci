@@ -25,4 +25,5 @@ public interface LinkedList<E> {
 	void reverse();
 	void setSize(int size);
 	Node findIntersection(LinkedList<E> list);
+	Node findLoop();
 }

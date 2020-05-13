@@ -1,7 +1,5 @@
-import java.util.HashSet;
 
-
-public class RemoveDuplicates {
+public class FindIntersectionTest {
 
 	public static void main(String[] args) {
 		SinglyLinkedList<Integer> list1 = new SinglyLinkedList();
@@ -18,7 +16,7 @@ public class RemoveDuplicates {
 		System.out.println(list1);
 		
 		SinglyLinkedList<Integer> list2 = new SinglyLinkedList();
-		Node[] nodes2 = new Node[7];
+		Node[] nodes2 = new Node[2];
 		
 		for(int i=0; i<nodes2.length; i++) {
 			nodes2[i] = new Node(i+1*20);
@@ -28,13 +26,16 @@ public class RemoveDuplicates {
 			nodes2[i-1].setNext(nodes2[i]);
 		}
 		list2.setHead(nodes2[0]);
-		list2.setSize(7);
+		list2.setSize(2);
 		System.out.println(list2);
 		
-		nodes1[6].setNext(nodes2[0]);
-		nodes2[6].setNext(nodes1[6]);
+		nodes2[1].setNext(nodes1[4]);
+		list2.setSize(5);
+		System.out.println(list1);
+		System.out.println(list2);
 		
-		Node loop = list1.findLoop();
-		System.out.println(loop);
-	}	
+		Node intersection = list1.findIntersection(list2);
+		System.out.println(intersection);
+	}
+
 }
