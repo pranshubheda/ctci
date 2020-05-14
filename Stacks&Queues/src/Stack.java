@@ -1,9 +1,7 @@
 public class Stack<E> {
 	private Node top;
 	private int size;
-	public Node getTop() {
-		return top;
-	}
+	
 	public void setTop(Node top) {
 		this.top = top;
 	}
