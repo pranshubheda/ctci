@@ -39,6 +39,21 @@ public class Stack<E> {
 		return top == null ? true:false;
 	}
 	
+	public Stack<E> sort() {
+		Stack<E> buffer = new Stack();
+		while(!this.isEmpty()) {
+			Node popped = this.pop();
+			Node bufferPopped = buffer.peek();
+			while(!buffer.isEmpty() && (Integer)popped.getData() < (Integer)bufferPopped.getData()) {
+				bufferPopped = buffer.pop();
+				this.push((E)bufferPopped.getData());
+			}
+			buffer.push((E)popped.getData());
+		}
+
+		return buffer;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
