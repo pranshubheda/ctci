@@ -5,7 +5,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Tree<E> {
+public class Tree<E extends Comparable<E>> {
 	Node root;
 	
 	/**
